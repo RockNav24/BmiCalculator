@@ -3,6 +3,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'reuseableCard.dart';
 import 'cardLayout.dart';
 import 'constants.dart';
+import 'roundIconButton.dart';
+import 'resultsPage.dart';
+import 'bmiCalculator.dart';
 
 enum Gender { male, female }
 
@@ -14,6 +17,8 @@ class InputPage extends StatefulWidget {
 class _InputPageState extends State<InputPage> {
   Gender selectGender;
   int height = 180;
+  int weight = 50;
+  int age = 20;
 
   @override
   Widget build(BuildContext context) {
@@ -76,15 +81,15 @@ class _InputPageState extends State<InputPage> {
                     crossAxisAlignment: CrossAxisAlignment.baseline,
                     textBaseline: TextBaseline.alphabetic,
                     children: <Widget>[
-                      Padding(
-                        padding: kPaddingText,
-                        child: Text(
-                          height.toString(),
-                          style: kTextBold,
-                        ),
+                      Text(
+                        height.toString(),
+                        style: kTextBold,
+                      ),
+                      SizedBox(
+                        width: 2,
                       ),
                       Text(
-                        'cm',
+                        'Cm',
                         style: kTextStyle,
                       ),
                     ],
@@ -121,18 +126,124 @@ class _InputPageState extends State<InputPage> {
             child: Row(
               children: <Widget>[
                 Expanded(
-                  child: ReusableCard(),
+                  child: ReusableCard(
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'Weight',
+                          style: kTextStyle,
+                        ),
+                        SizedBox(
+                          height: kHeightBTW,
+                        ),
+                        Text(
+                          weight.toString(),
+                          style: kTextBold,
+                        ),
+                        SizedBox(
+                          height: kHeightBTW,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.minus,
+                              onPress: () {
+                                setState(() {
+                                  weight -= 1;
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              width: kWidthBTW,
+                            ),
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.plus,
+                              onPress: () {
+                                setState(() {
+                                  weight += 1;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 Expanded(
-                  child: ReusableCard(),
+                  child: ReusableCard(
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text('Age', style: kTextStyle),
+                        SizedBox(
+                          height: kHeightBTW,
+                        ),
+                        Text(age.toString(), style: kTextBold),
+                        SizedBox(
+                          height: kHeightBTW,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.minus,
+                              onPress: () {
+                                setState(() {
+                                  age--;
+                                });
+                              },
+                            ),
+                            SizedBox(width: kWidthBTW),
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.plus,
+                              onPress: () {
+                                setState(() {
+                                  age++;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
-          Container(
-            color: kBottomBarColor,
-            height: kBottomBarHeight,
-            width: double.infinity,
+          GestureDetector(
+            onTap: () {
+              BmiCalculator bmi = BmiCalculator(
+                height: height,
+                weight: weight,
+              );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ResultsPage(
+                    result: bmi.calculateBMI(),
+                    resultText: bmi.getResult(),
+                    interpretation: bmi.getInterpretation(),
+                  ),
+                ),
+              );
+            },
+            child: Container(
+              child: Center(
+                child: Text(
+                  'CALCULATE',
+                  style: kBottomBTN,
+                ),
+              ),
+              color: kBottomBarColor,
+              height: kBottomBarHeight,
+              width: double.infinity,
+              margin: EdgeInsets.only(top: 10),
+              padding: EdgeInsets.only(bottom: 20),
+            ),
           ),
         ],
       ),

@@ -13,6 +13,33 @@ const kTextBold = TextStyle(
   color: Colors.white,
 );
 
+// result text style
+const kResultText = TextStyle(
+  fontSize: 80,
+  fontWeight: FontWeight.w900,
+  color: Colors.white,
+);
+
+// Result label style
+const kResultLabel = TextStyle(
+  fontSize: 25,
+  fontWeight: FontWeight.w900,
+  color: Colors.green,
+);
+
+// Result description
+const kResultDescription = TextStyle(
+  fontSize: 18,
+  fontWeight: FontWeight.w700,
+  color: Colors.white,
+);
+
+// bottom button
+const kBottomBTN = TextStyle(
+  fontWeight: FontWeight.w900,
+  fontSize: 25,
+);
+
 // padding from text and the measurement
 const kPaddingText = EdgeInsets.symmetric(
   vertical: 10,
@@ -32,3 +59,6 @@ const Color kSliderActive = Color(0xFFEB1555);
 const Color kSliderInActive = Color(0xFFBFBFBF);
 const double kMin = 100;
 const double kMax = 300;
+
+const double kWidthBTW = 15;
+const double kHeightBTW = 10;
