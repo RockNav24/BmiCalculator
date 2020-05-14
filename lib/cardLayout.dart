@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'constants.dart';
 
 class CardLayout extends StatelessWidget {
   final IconData icon;
@@ -20,10 +21,7 @@ class CardLayout extends StatelessWidget {
         ),
         Text(
           text,
-          style: TextStyle(
-            fontSize: 18,
-            color: Colors.grey[400],
-          ),
+          style: kTextStyle,
         ),
       ],
     );

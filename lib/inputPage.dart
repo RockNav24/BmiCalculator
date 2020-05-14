@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'reuseableCard.dart';
 import 'cardLayout.dart';
-
-const double bottomBarHeight = 80.0;
-const Color bottomBarColor = Color(0xFFEB1555);
+import 'constants.dart';
 
 enum Gender { male, female }
 
@@ -15,6 +13,7 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
   Gender selectGender;
+  int height = 180;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +22,7 @@ class _InputPageState extends State<InputPage> {
         title: Text('BMI CALCULATOR'),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Expanded(
             child: Row(
@@ -35,8 +35,8 @@ class _InputPageState extends State<InputPage> {
                       });
                     },
                     colour: selectGender == Gender.male
-                        ? activatedCard
-                        : inActivatedCard,
+                        ? kActivatedCard
+                        : kInActivatedCard,
                     cardChild: CardLayout(
                       icon: FontAwesomeIcons.mars,
                       text: 'Male',
@@ -51,8 +51,8 @@ class _InputPageState extends State<InputPage> {
                       });
                     },
                     colour: selectGender == Gender.female
-                        ? activatedCard
-                        : inActivatedCard,
+                        ? kActivatedCard
+                        : kInActivatedCard,
                     cardChild: CardLayout(
                       icon: FontAwesomeIcons.venus,
                       text: 'Female',
@@ -63,7 +63,59 @@ class _InputPageState extends State<InputPage> {
             ),
           ),
           Expanded(
-            child: ReusableCard(),
+            child: ReusableCard(
+              cardChild: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "Height",
+                    style: kTextStyle,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: <Widget>[
+                      Padding(
+                        padding: kPaddingText,
+                        child: Text(
+                          height.toString(),
+                          style: kTextBold,
+                        ),
+                      ),
+                      Text(
+                        'cm',
+                        style: kTextStyle,
+                      ),
+                    ],
+                  ),
+                  SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                      thumbShape: RoundSliderThumbShape(
+                        enabledThumbRadius: 15.0,
+                      ),
+                      overlayShape: RoundSliderOverlayShape(
+                        overlayRadius: 30.0,
+                      ),
+                      overlayColor: Color(0x40EB1555),
+                      thumbColor: kBottomBarColor,
+                      activeTrackColor: kSliderActive,
+                      inactiveTrackColor: kSliderInActive,
+                    ),
+                    child: Slider(
+                      value: height.toDouble(),
+                      min: kMin,
+                      max: kMax,
+                      onChanged: (double newValue) {
+                        setState(() {
+                          height = newValue.round();
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
           Expanded(
             child: Row(
@@ -78,8 +130,8 @@ class _InputPageState extends State<InputPage> {
             ),
           ),
           Container(
-            color: bottomBarColor,
-            height: bottomBarHeight,
+            color: kBottomBarColor,
+            height: kBottomBarHeight,
             width: double.infinity,
           ),
         ],
